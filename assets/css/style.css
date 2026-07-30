@@ -1,0 +1,114 @@
+/* REVA InterSchool Competition Portal — custom theme */
+
+:root {
+    --reva-primary: #F37021;
+    --reva-primary-dark: #D45A0F;
+    --reva-bg: #F7F7F7;
+    --reva-card: #FFFFFF;
+    --reva-text: #222222;
+    --reva-muted: #6B7280;
+}
+
+html, body, [class*="css"] {
+    font-family: 'Inter', 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+.stApp {
+    background-color: var(--reva-bg);
+}
+
+/* Hide default streamlit chrome for a more "official portal" feel */
+#MainMenu {visibility: hidden;}
+footer {visibility: hidden;}
+
+/* Header */
+.reva-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: linear-gradient(90deg, #ffffff 0%, #fff7f0 100%);
+    padding: 14px 28px;
+    border-radius: 16px;
+    box-shadow: 0 2px 14px rgba(0,0,0,0.06);
+    margin-bottom: 6px;
+}
+.reva-header .logo-box { display:flex; align-items:center; gap:12px; }
+.reva-header .center-title { text-align:center; flex:1; }
+.reva-header .center-title h1 {
+    margin: 0; font-size: 26px; font-weight: 800; color: var(--reva-text);
+    letter-spacing: -0.3px;
+}
+.reva-header .center-title p {
+    margin: 2px 0 0 0; color: var(--reva-primary); font-weight: 600; font-size: 13px;
+    text-transform: uppercase; letter-spacing: 1.2px;
+}
+
+/* Hero / banner */
+.reva-hero {
+    position: relative;
+    border-radius: 18px;
+    padding: 46px 36px;
+    margin: 14px 0 22px 0;
+    background:
+        linear-gradient(120deg, rgba(243,112,33,0.92) 0%, rgba(212,90,15,0.90) 100%),
+        url('https://images.unsplash.com/photo-1461896836934-ffe607ba8211?auto=format&fit=crop&w=1600&q=60');
+    background-size: cover;
+    background-position: center;
+    color: white;
+    box-shadow: 0 8px 30px rgba(243,112,33,0.25);
+}
+.reva-hero h2 { font-size: 32px; margin: 0 0 8px 0; font-weight: 800; }
+.reva-hero p { font-size: 15px; opacity: 0.95; margin: 0; max-width: 640px; }
+
+/* Cards */
+.reva-card {
+    background: var(--reva-card);
+    border-radius: 16px;
+    padding: 20px 22px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+    border: 1px solid rgba(0,0,0,0.04);
+    transition: box-shadow .2s ease, transform .2s ease;
+}
+.reva-card:hover { box-shadow: 0 6px 20px rgba(0,0,0,0.10); transform: translateY(-2px); }
+
+.reva-metric-label { color: var(--reva-muted); font-size: 12.5px; font-weight: 600; text-transform: uppercase; letter-spacing: .6px; }
+.reva-metric-value { font-size: 30px; font-weight: 800; color: var(--reva-text); margin-top: 4px; }
+.reva-metric-value.orange { color: var(--reva-primary); }
+
+/* Badges */
+.reva-badge { display:inline-block; padding: 3px 12px; border-radius: 999px; font-size: 12px; font-weight: 700; }
+.badge-open { background:#E8F7EF; color:#1D9A5B; }
+.badge-closed { background:#FDEDED; color:#D9534F; }
+.badge-draft { background:#F0F1F3; color:#6B7280; }
+.badge-archived { background:#EFEFEF; color:#8A8A8A; }
+.badge-pending { background:#FFF6E5; color:#E0A800; }
+.badge-approved { background:#E8F7EF; color:#1D9A5B; }
+.badge-rejected { background:#FDEDED; color:#D9534F; }
+
+/* Buttons */
+div.stButton > button, div.stDownloadButton > button {
+    background-color: var(--reva-primary);
+    color: white;
+    border-radius: 10px;
+    border: none;
+    font-weight: 600;
+    padding: 0.55em 1.4em;
+    transition: background-color .15s ease;
+}
+div.stButton > button:hover, div.stDownloadButton > button:hover {
+    background-color: var(--reva-primary-dark);
+    color: white;
+}
+
+/* Section header rule */
+.reva-section-title {
+    font-size: 19px; font-weight: 800; color: var(--reva-text);
+    margin: 22px 0 10px 0; border-left: 5px solid var(--reva-primary);
+    padding-left: 10px;
+}
+
+/* Footer */
+.reva-footer {
+    margin-top: 40px; padding: 26px 10px; text-align:center;
+    color: var(--reva-muted); font-size: 13px; border-top: 1px solid #eaeaea;
+}
