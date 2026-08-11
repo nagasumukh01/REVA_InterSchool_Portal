@@ -15,7 +15,7 @@ from modules import auth
 from utils import ui
 from views import (
     home, login, user_dashboard, event_details, register_form,
-    admin_dashboard, admin_events, admin_registrations, admin_reports,
+    admin_dashboard, admin_events, admin_registrations, admin_reports, admin_results,
 )
 
 st.set_page_config(
@@ -65,9 +65,9 @@ if current_auth and current_auth.get("role") == "admin" and st.session_state.pag
         st.caption(current_auth.get("role", "Admin"))
         selected = option_menu(
             menu_title=None,
-            options=["Dashboard", "Events", "Registrations", "Reports"],
-            icons=["speedometer2", "calendar-event", "clipboard-check", "bar-chart"],
-            default_index=["Dashboard", "Events", "Registrations", "Reports"].index(st.session_state.admin_nav),
+            options=["Dashboard", "Events", "Registrations", "Results", "Reports"],
+            icons=["speedometer2", "calendar-event", "clipboard-check", "trophy", "bar-chart"],
+            default_index=["Dashboard", "Events", "Registrations", "Results", "Reports"].index(st.session_state.admin_nav),
         )
         st.session_state.admin_nav = selected
 
@@ -77,6 +77,8 @@ if current_auth and current_auth.get("role") == "admin" and st.session_state.pag
         admin_events.render()
     elif selected == "Registrations":
         admin_registrations.render()
+    elif selected == "Results":
+        admin_results.render()
     elif selected == "Reports":
         admin_reports.render()
 
