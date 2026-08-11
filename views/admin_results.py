@@ -11,12 +11,29 @@ def render():
 
     all_events = events_mod.list_events()
 
+    # Read all registrations to count participation points
+    from utils import storage
+    all_regs = storage.read_table("registrations")
+
     # Initialize points mapping for all schools
     schools_list = list(config.SCHOOLS.keys())
     points_map = {
-        school: {"Organizing Points": 0, "Placement Points": 0, "Total Points": 0}
+        school: {
+            "Organizing Points": 0,
+            "Placement Points": 0,
+            "Participation Points": 0,
+            "Total Points": 0
+        }
         for school in schools_list
     }
+
+    # Calculate 4 points per approved participation registration
+    for r in all_regs:
+        if r.get("status") == "Approved":
+            sch = r.get("school")
+            if sch and sch in points_map:
+                points_map[sch]["Participation Points"] += 4
+                points_map[sch]["Total Points"] += 4
 
     # Calculate points from each event
     for e in all_events:
@@ -61,6 +78,7 @@ def render():
             "School": school,
             "Organizing Points (5 pts)": pts["Organizing Points"],
             "Placement Points": pts["Placement Points"],
+            "Participation Points (4 pts)": pts["Participation Points"],
             "Total Points": pts["Total Points"],
         })
 
@@ -73,7 +91,7 @@ def render():
 
     # Render Leaderboard Table
     df = pd.DataFrame(records)
-    df = df[["Rank", "School", "Organizing Points (5 pts)", "Placement Points", "Total Points"]]
+    df = df[["Rank", "School", "Organizing Points (5 pts)", "Placement Points", "Participation Points (4 pts)", "Total Points"]]
 
     st.markdown("### 📊 Points Table")
     st.dataframe(df, use_container_width=True, hide_index=True)
