@@ -82,16 +82,41 @@ def render():
             "Total Points": pts["Total Points"],
         })
 
-    # Sort by total points descending
+    # Sort by total points descending to assign global rank
     records = sorted(records, key=lambda x: x["Total Points"], reverse=True)
 
     # Assign Rank (handling ties simply by index)
     for index, r in enumerate(records, 1):
         r["Rank"] = index
 
+    st.markdown("### 📊 Points Table")
+
+    col_search, col_sort = st.columns([2, 1])
+    with col_search:
+        search_query = st.text_input("🔍 Search School", placeholder="Enter school name to filter...", key="leaderboard_search")
+    with col_sort:
+        sort_by = st.selectbox("↕️ Sort by", ["Total Points", "School Name", "Organizing Points", "Placement Points", "Participation Points"], key="leaderboard_sort")
+
+    # Apply search filter
+    filtered_records = list(records)
+    if search_query:
+        filtered_records = [r for r in filtered_records if search_query.lower() in r["School"].lower()]
+
+    # Apply sort filter
+    if sort_by == "School Name":
+        filtered_records = sorted(filtered_records, key=lambda x: x["School"])
+    elif sort_by == "Organizing Points":
+        filtered_records = sorted(filtered_records, key=lambda x: x["Organizing Points (5 pts)"], reverse=True)
+    elif sort_by == "Placement Points":
+        filtered_records = sorted(filtered_records, key=lambda x: x["Placement Points"], reverse=True)
+    elif sort_by == "Participation Points":
+        filtered_records = sorted(filtered_records, key=lambda x: x["Participation Points (4 pts)"], reverse=True)
+    elif sort_by == "Total Points":
+        filtered_records = sorted(filtered_records, key=lambda x: x["Total Points"], reverse=True)
+
     # Render Leaderboard Table (HTML)
     table_rows = []
-    for r in records:
+    for r in filtered_records:
         rank = r["Rank"]
         school = r["School"]
         org_pts = r["Organizing Points (5 pts)"]
@@ -173,7 +198,6 @@ def render():
     </div>
     """
 
-    st.markdown("### 📊 Points Table")
     st.markdown(html_table.replace("\n", ""), unsafe_allow_html=True)
 
     st.write("")
