@@ -89,12 +89,92 @@ def render():
     for index, r in enumerate(records, 1):
         r["Rank"] = index
 
-    # Render Leaderboard Table
-    df = pd.DataFrame(records)
-    df = df[["Rank", "School", "Organizing Points (5 pts)", "Placement Points", "Participation Points (4 pts)", "Total Points"]]
+    # Render Leaderboard Table (HTML)
+    table_rows = []
+    for r in records:
+        rank = r["Rank"]
+        school = r["School"]
+        org_pts = r["Organizing Points (5 pts)"]
+        place_pts = r["Placement Points"]
+        part_pts = r["Participation Points (4 pts)"]
+        tot_pts = r["Total Points"]
+
+        if rank == 1:
+            rank_html = '<span style="background: #FFF9DB; color: #D08000; border: 1px solid #FFE066; padding: 4px 12px; border-radius: 12px; font-weight: 800; font-size: 13px;">🏆 1st</span>'
+            row_bg = "background-color: #FFFDF5;"
+        elif rank == 2:
+            rank_html = '<span style="background: #F1F3F5; color: #495057; border: 1px solid #CED4DA; padding: 4px 12px; border-radius: 12px; font-weight: 800; font-size: 13px;">🥈 2nd</span>'
+            row_bg = "background-color: #FAFAFA;"
+        elif rank == 3:
+            rank_html = '<span style="background: #FCE8E6; color: #C53030; border: 1px solid #FAD2CF; padding: 4px 12px; border-radius: 12px; font-weight: 800; font-size: 13px;">🥉 3rd</span>'
+            row_bg = "background-color: #FFFDFD;"
+        else:
+            rank_html = f'<span style="color: #6B7280; font-weight: 700; font-size: 13px; padding-left: 10px;">{rank}</span>'
+            row_bg = ""
+
+        table_rows.append(f"""
+        <tr style="{row_bg} border-bottom: 1px solid #E5E7EB;">
+            <td style="padding: 14px 16px; text-align: center; vertical-align: middle;">{rank_html}</td>
+            <td style="padding: 14px 16px; font-weight: 600; color: #1F2937; vertical-align: middle;">{school}</td>
+            <td style="padding: 14px 16px; text-align: center; color: #4B5563; font-weight: 500; vertical-align: middle;">{org_pts}</td>
+            <td style="padding: 14px 16px; text-align: center; color: #4B5563; font-weight: 500; vertical-align: middle;">{place_pts}</td>
+            <td style="padding: 14px 16px; text-align: center; color: #4B5563; font-weight: 500; vertical-align: middle;">{part_pts}</td>
+            <td style="padding: 14px 16px; text-align: center; font-weight: 800; font-size: 16px; color: #F37021; vertical-align: middle;">{tot_pts}</td>
+        </tr>
+        """)
+
+    table_body = "".join(table_rows)
+
+    html_table = f"""
+    <style>
+        .pts-table-container {{
+            width: 100%;
+            overflow-x: auto;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            margin-bottom: 25px;
+            border: 1px solid #E5E7EB;
+        }}
+        .pts-table {{
+            width: 100%;
+            border-collapse: collapse;
+            background-color: #ffffff;
+            font-family: 'Inter', sans-serif;
+            font-size: 14px;
+        }}
+        .pts-table th {{
+            background: linear-gradient(135deg, #F37021, #FF8D48);
+            color: white;
+            font-weight: 700;
+            padding: 16px;
+            text-align: left;
+            letter-spacing: 0.5px;
+        }}
+        .pts-table tr:hover {{
+            background-color: #F8FAFC !important;
+        }}
+    </style>
+    <div class="pts-table-container">
+        <table class="pts-table">
+            <thead>
+                <tr>
+                    <th style="text-align: center; width: 100px;">Rank</th>
+                    <th>School</th>
+                    <th style="text-align: center; width: 180px;">Organizing Points (5 pts)</th>
+                    <th style="text-align: center; width: 150px;">Placement Points</th>
+                    <th style="text-align: center; width: 180px;">Participation Points (4 pts)</th>
+                    <th style="text-align: center; width: 130px; text-align: center;">Total Points</th>
+                </tr>
+            </thead>
+            <tbody>
+                {table_body}
+            </tbody>
+        </table>
+    </div>
+    """
 
     st.markdown("### 📊 Points Table")
-    st.dataframe(df, use_container_width=True, hide_index=True)
+    st.markdown(html_table.replace("\n", ""), unsafe_allow_html=True)
 
     st.write("")
     ui.section_title("Completed Events & Placements")
