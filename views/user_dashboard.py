@@ -1,7 +1,7 @@
 import streamlit as st
 
 from modules import events as events_mod, registrations as reg_mod, notifications
-from utils import ui, helpers
+from utils import ui, helpers, leaderboard
 
 
 def render():
@@ -24,6 +24,10 @@ def render():
         ui.metric_card("My Registrations", len(my_regs))
     with c3:
         ui.metric_card("Approved", len([r for r in my_regs if r.get("status") == "Approved"]))
+
+    st.write("")
+    ui.section_title("Competition Leaderboard")
+    leaderboard.render_leaderboard_table(show_all_columns=True)
 
     ui.section_title("Available Events")
     open_events = [e for e in all_events if e.get("registration_status") in ("Open", "Closed")]

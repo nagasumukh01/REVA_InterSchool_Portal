@@ -72,7 +72,7 @@ def header():
             {reva_logo_html}
         </div>
         <div class="center-title">
-            <h1>REVA InterSchool Competition Portal</h1>
+            <h1>DEPARTMENT OF PHYSICAL EDUCATION & SPORTS</h1>
             <p>Official Sports Event Registration System</p>
         </div>
         <div class="logo-box">

@@ -2,7 +2,7 @@ import streamlit as st
 
 import config
 from modules import events as events_mod, notifications
-from utils import ui, helpers
+from utils import ui, helpers, leaderboard
 
 
 def render():
@@ -28,6 +28,10 @@ def render():
         ui.metric_card("Schools Participating", schools_count)
     with c4:
         ui.metric_card("Players Registered", total_regs * 2)  # captain + vice-captain per team
+
+    st.write("")
+    ui.section_title("Competition Leaderboard")
+    leaderboard.render_leaderboard_table(show_all_columns=False)
 
     ui.section_title("Upcoming Events")
     if not open_events:

@@ -15,11 +15,11 @@ from modules import auth
 from utils import ui
 from views import (
     home, login, user_dashboard, event_details, register_form,
-    admin_dashboard, admin_events, admin_registrations, admin_reports, admin_results,
+    admin_dashboard, admin_events, admin_registrations, admin_reports, admin_results, admin_aiu,
 )
 
 st.set_page_config(
-    page_title="REVA InterSchool Competition Portal",
+    page_title="DEPARTMENT OF PHYSICAL EDUCATION & SPORTS",
     page_icon="🏆",
     layout="wide",
     initial_sidebar_state="collapsed",
@@ -61,13 +61,13 @@ if st.session_state.page in protected_admin_pages and (not current_auth or curre
 # --------------------------------------------------------------------------
 if current_auth and current_auth.get("role") == "admin" and st.session_state.page.startswith("admin"):
     with st.sidebar:
-        st.markdown(f"**{current_auth['name']}**")
-        st.caption(current_auth.get("role", "Admin"))
+        st.markdown("**Sports Department**")
+        st.caption("Administrator")
         selected = option_menu(
             menu_title=None,
-            options=["Dashboard", "Events", "Registrations", "Results", "Reports"],
-            icons=["speedometer2", "calendar-event", "clipboard-check", "trophy", "bar-chart"],
-            default_index=["Dashboard", "Events", "Registrations", "Results", "Reports"].index(st.session_state.admin_nav),
+            options=["Dashboard", "Events", "Registrations", "Results", "AIU & Other", "Reports"],
+            icons=["speedometer2", "calendar-event", "clipboard-check", "trophy", "award", "bar-chart"],
+            default_index=["Dashboard", "Events", "Registrations", "Results", "AIU & Other", "Reports"].index(st.session_state.admin_nav),
         )
         st.session_state.admin_nav = selected
 
@@ -79,6 +79,8 @@ if current_auth and current_auth.get("role") == "admin" and st.session_state.pag
         admin_registrations.render()
     elif selected == "Results":
         admin_results.render()
+    elif selected == "AIU & Other":
+        admin_aiu.render()
     elif selected == "Reports":
         admin_reports.render()
 
