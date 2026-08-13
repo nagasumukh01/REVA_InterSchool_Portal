@@ -7,7 +7,7 @@ from utils import ui, helpers, leaderboard
 
 def render():
     ui.hero(
-        "Welcome to the REVA InterSchool Competition Portal",
+        "Welcome to the Department of Physical Education & Sports REVA University",
         "The official platform for registering, managing, and tracking inter-school "
         "sporting events across REVA University. Built for Sports Vertical Heads and "
         "the Sports Department to run a fair, transparent, and efficient competition.",
