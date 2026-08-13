@@ -10,9 +10,21 @@ def render():
     col_l, col_c, col_r = st.columns([1, 2, 1])
     with col_c:
         st.markdown('<div class="reva-card">', unsafe_allow_html=True)
-        tabs = st.tabs(["🏫 School Sports Head", "🛡️ Admin"])
+        # Horizontal selection menu
+        roles = ["🏫 School Sports Head", "🛡️ Admin"]
+        default_role_idx = 0 if role == "school_head" else 1
+        
+        selected_role = st.radio(
+            "Select Login Role",
+            roles,
+            index=default_role_idx,
+            horizontal=True,
+            label_visibility="collapsed"
+        )
+        
+        st.write("") # small spacing
 
-        with tabs[0]:
+        if selected_role == "🏫 School Sports Head":
             st.markdown("##### Login with your College Email or College ID")
             login_id = st.text_input("College Email / College ID", key="sh_login_id",
                                       placeholder="sportshead.soe@reva.edu.in")
@@ -41,7 +53,7 @@ def render():
                     else:
                         st.error(msg)
 
-        with tabs[1]:
+        else:
             st.markdown("##### Admin / Sports Director Login")
             admin_email = st.text_input("Admin Email", key="admin_email")
             admin_password = st.text_input("Password", type="password", key="admin_password")
