@@ -24,59 +24,42 @@ def header():
     reva_b64 = get_image_base64(reva_logo_path)
     naac_b64 = get_image_base64(naac_logo_path)
     
+    # Left Side: Text only
+    left_html = """
+    <div style="display:flex; flex-direction:column; justify-content:center;">
+        <div style="font-weight:800;font-size:14px;color:#222;letter-spacing:0.5px;white-space:nowrap;">SPORTS DEPARTMENT</div>
+        <div style="font-size:11px;color:#6B7280;font-weight:600;white-space:nowrap;">Official Portal</div>
+    </div>
+    """
+    
+    # Right Side: REVA logo and NAAC logo side-by-side, separated by a vertical line
+    right_parts = []
     if reva_b64:
-        reva_logo_html = f"""
-        <div style="display:flex; align-items:center; gap:12px;">
-            <img src="data:image/png;base64,{reva_b64}" style="height:48px; object-fit:contain;" />
-            <div style="border-left: 2px solid #ddd; padding-left: 12px; height: 32px; display: flex; flex-direction: column; justify-content: center;">
-                <div style="font-weight:800;font-size:13px;color:#222;letter-spacing:0.5px;">SPORTS DEPARTMENT</div>
-                <div style="font-size:10px;color:#6B7280;">Official Portal</div>
-            </div>
-        </div>
-        """
+        right_parts.append(f'<img src="data:image/png;base64,{reva_b64}" style="height:44px; object-fit:contain;" />')
     else:
-        reva_logo_html = """
-        <div style="display:flex; align-items:center; gap:12px;">
-            <div style="width:52px;height:52px;border-radius:12px;background:#F37021;
-                        display:flex;align-items:center;justify-content:center;
-                        color:white;font-weight:800;font-size:20px;">R</div>
-            <div>
-                <div style="font-weight:800;font-size:14px;color:#222;">REVA UNIVERSITY</div>
-                <div style="font-size:11px;color:#6B7280;">Sports Department</div>
-            </div>
-        </div>
-        """
+        right_parts.append('<div style="font-weight:800;font-size:12px;color:#F37021;">REVA</div>')
+        
+    if reva_b64 and naac_b64:
+        right_parts.append('<div style="border-left: 2px solid #ddd; height: 32px; margin: 0 8px;"></div>')
         
     if naac_b64:
-        naac_logo_html = f"""
-        <div style="display:flex; align-items:center; gap:12px;">
-            <img src="data:image/png;base64,{naac_b64}" style="height:48px; object-fit:contain;" />
-        </div>
-        """
+        right_parts.append(f'<img src="data:image/png;base64,{naac_b64}" style="height:44px; object-fit:contain;" />')
     else:
-        naac_logo_html = """
-        <div style="display:flex; align-items:center; gap:12px;">
-            <div style="text-align:right;">
-                <div style="font-weight:800;font-size:14px;color:#222;">NAAC A+</div>
-                <div style="font-size:11px;color:#6B7280;">Accredited Institution</div>
-            </div>
-            <div style="width:52px;height:52px;border-radius:12px;background:#1D9A5B;
-                        display:flex;align-items:center;justify-content:center;
-                        color:white;font-weight:800;font-size:14px;">A+</div>
-        </div>
-        """
+        right_parts.append('<div style="font-weight:800;font-size:12px;color:#1D9A5B;">NAAC A+</div>')
+        
+    right_html = f'<div style="display:flex; align-items:center; gap:12px;">{"".join(right_parts)}</div>'
 
     html = f"""
     <div class="reva-header">
         <div class="logo-box">
-            {reva_logo_html}
+            {left_html}
         </div>
         <div class="center-title">
             <h1>DEPARTMENT OF PHYSICAL EDUCATION & SPORTS</h1>
             <p>Official Sports Event Registration System</p>
         </div>
-        <div class="logo-box">
-            {naac_logo_html}
+        <div class="logo-box" style="justify-content: flex-end;">
+            {right_html}
         </div>
     </div>
     """
