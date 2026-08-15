@@ -20,17 +20,22 @@ def inject_css():
 def header():
     reva_logo_path = config.ASSETS_DIR / "logos" / "reva_logo_horizontal.png"
     naac_logo_path = config.ASSETS_DIR / "logos" / "naac_logo_custom.png"
+    dept_logo_path = config.ASSETS_DIR / "logos" / "sports_department_logo.jpg"
     
     reva_b64 = get_image_base64(reva_logo_path)
     naac_b64 = get_image_base64(naac_logo_path)
+    dept_b64 = get_image_base64(dept_logo_path)
     
-    # Left Side: Text only
-    left_html = """
-    <div style="display:flex; flex-direction:column; justify-content:center;">
-        <div style="font-weight:800;font-size:14px;color:#222;letter-spacing:0.5px;white-space:nowrap;">SPORTS DEPARTMENT</div>
-        <div style="font-size:11px;color:#6B7280;font-weight:600;white-space:nowrap;">Official Portal</div>
-    </div>
-    """
+    # Left Side: Department Circular Logo (clips background with border-radius)
+    if dept_b64:
+        left_html = f'<img src="data:image/jpeg;base64,{dept_b64}" style="height:56px; width:56px; border-radius:50%; object-fit:cover;" />'
+    else:
+        left_html = """
+        <div style="display:flex; flex-direction:column; justify-content:center;">
+            <div style="font-weight:800;font-size:14px;color:#222;letter-spacing:0.5px;white-space:nowrap;">SPORTS DEPARTMENT</div>
+            <div style="font-size:11px;color:#6B7280;font-weight:600;white-space:nowrap;">Official Portal</div>
+        </div>
+        """
     
     # Right Side: REVA logo and NAAC logo side-by-side, separated by a vertical line
     right_parts = []
