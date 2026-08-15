@@ -28,7 +28,7 @@ def header():
     
     # Left Side: Department Circular Logo (clips background with border-radius)
     if dept_b64:
-        left_html = f'<img src="data:image/jpeg;base64,{dept_b64}" style="height:56px; width:56px; border-radius:50%; object-fit:cover;" />'
+        left_html = f'<img src="data:image/jpeg;base64,{dept_b64}" style="height:100px; width:100px; border-radius:100%; object-fit:cover;" />'
     else:
         left_html = """
         <div style="display:flex; flex-direction:column; justify-content:center;">
